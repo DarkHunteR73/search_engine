@@ -1,0 +1,8 @@
+[Dd]ebug/
+*[Dd]ebug
+*[Rr]elease/
+[Rr]elease/
+out/
+.idea/
+cmake*/
+.vscode/
