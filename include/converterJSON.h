@@ -48,5 +48,5 @@ private:
     */
     void readConfig();
 
-    json m_config;
+    static json m_config;
 };
