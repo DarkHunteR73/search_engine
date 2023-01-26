@@ -8,6 +8,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -DENGINE_VERSION_MAJOR=${PROJECT_VERSION_MAJOR} -DENGINE_VERSION_MINOR=${PROJECT_VERSION_MINOR}")
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 
+set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+set(PROJECT_SRC_DIR ${CMAKE_SOURCE_DIR}/src)
+set(PROJECT_SOURCES ${PROJECT_INCLUDE_DIR}/converterJSON.h
+                    ${PROJECT_SRC_DIR}/converterJSON.cpp
+                    ${PROJECT_INCLUDE_DIR}/invertedIndex.h
+                    ${PROJECT_SRC_DIR}/invertedIndex.cpp
+)
+
 add_subdirectory(src)
 add_subdirectory(Tests)
 
