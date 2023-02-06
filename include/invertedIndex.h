@@ -5,8 +5,10 @@
 #include <mutex>
 #include <string>
 #include <sstream>
+#include <vector>
 
-#include "converterJSON.h"
+#ifndef INVERTED_INDEX_H
+#define INVERTED_INDEX_H
 
 struct entry {
     size_t doc_id, count;
@@ -33,7 +35,10 @@ public:
     */
     std::vector<entry> getWordCount(const std::string& word);
 
+    size_t size();
+
 private:
     std::vector<std::string> docs;
     std::map<std::string, std::vector<entry>> freq_dictionary;
 };
+#endif //INVERTED_INDEX_H

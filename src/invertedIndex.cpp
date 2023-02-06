@@ -10,7 +10,7 @@ void invertedIndex::updateDocumentBase(std::vector<std::string> input_docs) {
         std::vector<std::thread> threadVec(input_docs.size());
 
         for (size_t i = 0; i < input_docs.size(); ++i) {
-            threadVec[i] = std::thread([&](const std::string &text, const size_t docIndex) {
+            threadVec[i] = std::thread([this, &mtx](const std::string &text, const size_t docIndex) {
                 std::stringstream ss(text);
                 std::string tmp;
 
@@ -54,6 +54,10 @@ void invertedIndex::updateDocumentBase(std::vector<std::string> input_docs) {
 
 std::vector<entry> invertedIndex::getWordCount(const std::string &word) {
     return freq_dictionary.contains(word) ? freq_dictionary[word] : std::vector<entry>();
+}
+
+size_t invertedIndex::size() {
+    return docs.size();
 }
 
 bool entry::operator==(const entry &other) const {

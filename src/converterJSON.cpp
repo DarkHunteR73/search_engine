@@ -1,5 +1,7 @@
 #include "converterJSON.h"
 
+json converterJSON::m_config = json();
+
 std::vector<std::string> converterJSON::getTextDocuments() {
     if (m_config.empty()) {
         try {
@@ -69,7 +71,7 @@ std::vector<std::string> converterJSON::getRequests() {
     }
 }
 
-void converterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> answers) {
+void converterJSON::putAnswers(std::vector<std::vector<relativeIndex>> answers) {
     json j;
     j["answers"];
 
@@ -87,20 +89,15 @@ void converterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
         if (answers[i].size() > 1) {
             json::reference relevance = request["relevance"];
 
-            std::sort(answers[i].begin(), answers[i].end(),
-                      [](std::pair<int, float> a, std::pair<int, float> b) {
-                return a.second > b.second;
-            });
-
             for (auto &it: answers[i]) {
                 json entry;
-                entry["docid"] = it.first;
-                entry["rank"] = it.second;
+                entry["docid"] = it.doc_id;
+                entry["rank"] = it.rank;
                 relevance.emplace_back(entry);
             }
         } else if (answers[i].size() == 1) {
-            request["docid"] = answers[i][0].first;
-            request["rank"] = answers[i][0].second;
+            request["docid"] = answers[i][0].doc_id;
+            request["rank"] = answers[i][0].rank;
         }
     }
 
@@ -121,17 +118,28 @@ void converterJSON::readConfig() {
         throw std::runtime_error{"Config file is missing."};
     }
 
+    std::cout << "Reading config file...";
+
     std::ifstream file(path);
     file >> m_config;
     file.close();
 
     if (!m_config.contains("config")) {
+        std::cout << std::endl;
         throw std::runtime_error{"Config file is empty."};
     } else if (!m_config["config"].contains("version")) {
+        std::cout << std::endl;
         throw std::runtime_error{"config.json does not contain version information."};
     } else if (m_config["config"]["version"].get<std::string>() !=
                (std::to_string(ENGINE_VERSION_MAJOR) + '.' +
                 std::to_string(ENGINE_VERSION_MINOR))) {
+        std::cout << std::endl;
         throw std::runtime_error{"config.json has incorrect file version"};
     }
+
+    std::cout << " OK" << std::endl;
+
+    std::cout << "Starting "
+              << (m_config["config"].contains("name") ? m_config["config"]["name"] : "Unnamed engine")
+              << " version " << m_config["config"]["version"] << std::endl;
 }

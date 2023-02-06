@@ -9,9 +9,15 @@
 #include <filesystem>
 
 #include "nlohmann/json.hpp"
+#include "searchServer.h"
+
+#ifndef CONVERTER_JSON_H
+#define CONVERTER_JSON_H
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
+
+struct relativeIndex;
 
 class converterJSON {
 public:
@@ -40,7 +46,7 @@ public:
     /**
     * Положить в файл answers.json результаты поисковых запросов
     */
-    void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers);
+    void putAnswers(std::vector<std::vector<relativeIndex>> answers);
 
 private:
     /**
@@ -48,5 +54,6 @@ private:
     */
     void readConfig();
 
-    json m_config;
+    static json m_config;
 };
+#endif //CONVERTER_JSON_H

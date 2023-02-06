@@ -14,6 +14,8 @@ set(PROJECT_SOURCES ${PROJECT_INCLUDE_DIR}/converterJSON.h
                     ${PROJECT_SRC_DIR}/converterJSON.cpp
                     ${PROJECT_INCLUDE_DIR}/invertedIndex.h
                     ${PROJECT_SRC_DIR}/invertedIndex.cpp
+                    ${PROJECT_INCLUDE_DIR}/searchServer.h
+                    ${PROJECT_SRC_DIR}/searchServer.cpp
 )
 
 add_subdirectory(src)
