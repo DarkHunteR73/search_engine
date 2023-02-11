@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "converterJSON.h"
+#include "jsonConverter.h"
 #include "invertedIndex.h"
 #include "searchServer.h"
 
 int main() {
-    converterJSON converter;
+    jsonConverter converter;
 
     invertedIndex idx;
     idx.updateDocumentBase(converter.getTextDocuments());

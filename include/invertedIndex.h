@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INVERTED_INDEX_H
+#define INVERTED_INDEX_H
 
 #include <map>
 #include <thread>
@@ -6,9 +7,6 @@
 #include <string>
 #include <sstream>
 #include <vector>
-
-#ifndef INVERTED_INDEX_H
-#define INVERTED_INDEX_H
 
 struct entry {
     size_t doc_id, count;

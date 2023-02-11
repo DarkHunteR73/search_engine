@@ -3,7 +3,7 @@
 searchServer::searchServer(invertedIndex &idx) : m_index(idx) {}
 
 std::vector<std::vector<relativeIndex>> searchServer::search(const std::vector<std::string> &queries_input) {
-    converterJSON converter;
+    jsonConverter converter;
     std::vector<std::vector<relativeIndex>> result(queries_input.size());
 
     std::vector<std::thread> threadVec(queries_input.size());

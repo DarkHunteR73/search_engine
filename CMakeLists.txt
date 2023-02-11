@@ -10,8 +10,8 @@ set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(PROJECT_SRC_DIR ${CMAKE_SOURCE_DIR}/src)
-set(PROJECT_SOURCES ${PROJECT_INCLUDE_DIR}/converterJSON.h
-                    ${PROJECT_SRC_DIR}/converterJSON.cpp
+set(PROJECT_SOURCES ${PROJECT_INCLUDE_DIR}/jsonConverter.h
+                    ${PROJECT_SRC_DIR}/jsonConverter.cpp
                     ${PROJECT_INCLUDE_DIR}/invertedIndex.h
                     ${PROJECT_SRC_DIR}/invertedIndex.cpp
                     ${PROJECT_INCLUDE_DIR}/searchServer.h

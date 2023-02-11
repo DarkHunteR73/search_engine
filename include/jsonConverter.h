@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CONVERTER_JSON_H
+#define CONVERTER_JSON_H
 
 #include <string>
 #include <vector>
@@ -11,17 +12,13 @@
 #include "nlohmann/json.hpp"
 #include "searchServer.h"
 
-#ifndef CONVERTER_JSON_H
-#define CONVERTER_JSON_H
-
-namespace fs = std::filesystem;
 using json = nlohmann::json;
 
 struct relativeIndex;
 
-class converterJSON {
+class jsonConverter {
 public:
-    converterJSON() = default;
+    jsonConverter() = default;
 
     /**
     * Метод получения содержимого файлов

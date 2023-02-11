@@ -1,8 +1,10 @@
-#include "converterJSON.h"
+#include "jsonConverter.h"
 
-json converterJSON::m_config = json();
+namespace fs = std::filesystem;
 
-std::vector<std::string> converterJSON::getTextDocuments() {
+json jsonConverter::m_config = json();
+
+std::vector<std::string> jsonConverter::getTextDocuments() {
     if (m_config.empty()) {
         try {
             readConfig();
@@ -35,7 +37,7 @@ std::vector<std::string> converterJSON::getTextDocuments() {
     return result;
 }
 
-int converterJSON::getResponsesLimit() {
+int jsonConverter::getResponsesLimit() {
     if (m_config.empty()) {
         try {
             readConfig();
@@ -52,7 +54,7 @@ int converterJSON::getResponsesLimit() {
     }
 }
 
-std::vector<std::string> converterJSON::getRequests() {
+std::vector<std::string> jsonConverter::getRequests() {
     json j;
     fs::path path("../../requests.json");
     std::ifstream file(path);
@@ -71,7 +73,7 @@ std::vector<std::string> converterJSON::getRequests() {
     }
 }
 
-void converterJSON::putAnswers(std::vector<std::vector<relativeIndex>> answers) {
+void jsonConverter::putAnswers(std::vector<std::vector<relativeIndex>> answers) {
     json j;
     j["answers"];
 
@@ -111,7 +113,7 @@ void converterJSON::putAnswers(std::vector<std::vector<relativeIndex>> answers) 
     file.close();
 }
 
-void converterJSON::readConfig() {
+void jsonConverter::readConfig() {
     fs::path path{"../../config.json"};
 
     if (!fs::exists(path)) {

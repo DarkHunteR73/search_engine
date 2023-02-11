@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SEARCH_SERVER_H
+#define SEARCH_SERVER_H
 
 #include <limits>
 #include <thread>
@@ -6,11 +7,8 @@
 #include <string>
 #include <sstream>
 
-#include "converterJSON.h"
+#include "jsonConverter.h"
 #include "invertedIndex.h"
-
-#ifndef SEARCH_SERVER_H
-#define SEARCH_SERVER_H
 
 struct relativeIndex {
     size_t doc_id;
