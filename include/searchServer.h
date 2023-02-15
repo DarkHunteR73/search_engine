@@ -1,13 +1,8 @@
 #ifndef SEARCH_SERVER_H
 #define SEARCH_SERVER_H
 
-#include <limits>
-#include <thread>
-#include <mutex>
 #include <string>
-#include <sstream>
-
-#include "jsonConverter.h"
+#include <vector>
 #include "invertedIndex.h"
 
 struct relativeIndex {
