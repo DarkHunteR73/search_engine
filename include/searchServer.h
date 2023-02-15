@@ -3,7 +3,9 @@
 
 #include <string>
 #include <vector>
-#include "invertedIndex.h"
+//#include "invertedIndex.h"
+
+class invertedIndex;
 
 struct relativeIndex {
     size_t doc_id;
