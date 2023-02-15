@@ -1,8 +1,10 @@
+#include "threadPool.h"
 #include "searchServer.h"
 #include "jsonConverter.h"
 
 #include <limits>
 #include <thread>
+#include <atomic>
 #include <mutex>
 
 searchServer::searchServer(invertedIndex &idx) : m_index(idx) {}
@@ -11,14 +13,13 @@ std::vector<std::vector<relativeIndex>> searchServer::search(const std::vector<s
     jsonConverter converter;
     std::vector<std::vector<relativeIndex>> result(queries_input.size());
 
-    std::vector<std::thread> threadVec(queries_input.size());
-    std::mutex mtx;
+    threadPool tp(std::min(queries_input.size(), static_cast<size_t>(std::thread::hardware_concurrency() - 1)));
     std::vector<std::vector<int>> sumsForEachQuery(queries_input.size(),
                                                    std::vector<int>(m_index.size(), 0));
-    int maxAbsoluteRelevance = 0;
+    std::atomic<int> maxAbsoluteRelevance = 0;
 
-    for (size_t i = 0; i < threadVec.size(); ++i) {
-        threadVec[i] = std::thread([this, &mtx, &maxAbsoluteRelevance]
+    for (size_t i = 0; i < queries_input.size(); ++i) {
+        tp.addTask([this, &maxAbsoluteRelevance]
                                            (const std::string &queryText,
                                             std::vector<int> &sumsForEachFile) {
             std::stringstream ss(queryText);
@@ -39,20 +40,17 @@ std::vector<std::vector<relativeIndex>> searchServer::search(const std::vector<s
             std::vector<int>::iterator absoluteRelevance;
             absoluteRelevance = std::max_element(sumsForEachFile.begin(), sumsForEachFile.end());
 
-            const std::lock_guard<std::mutex> lock(mtx);
             if (*absoluteRelevance > maxAbsoluteRelevance) {
                 maxAbsoluteRelevance = *absoluteRelevance;
             }
-        }, queries_input[i], std::ref(sumsForEachQuery[i]));
+        }, std::ref(queries_input[i]), std::ref(sumsForEachQuery[i]));
     }
 
-    for (auto &it: threadVec) {
-        it.join();
-    }
+    tp.wait();
 
     int responsesLimit = converter.getResponsesLimit();
-    for (int i = 0; i < threadVec.size(); ++i) {
-        threadVec[i] = std::thread([responsesLimit, maxAbsoluteRelevance]
+    for (int i = 0; i < queries_input.size(); ++i) {
+        tp.addTask([responsesLimit, &maxAbsoluteRelevance]
                                            (const std::vector<int> &sums, std::vector<relativeIndex> &result) {
             std::vector<relativeIndex> tmp;
             for (size_t j = 0; j < sums.size(); ++j) {
@@ -76,9 +74,7 @@ std::vector<std::vector<relativeIndex>> searchServer::search(const std::vector<s
         }, std::ref(sumsForEachQuery[i]), std::ref(result[i]));
     }
 
-    for (auto &it: threadVec) {
-        it.join();
-    }
+    tp.wait();
 
     return result;
 }
