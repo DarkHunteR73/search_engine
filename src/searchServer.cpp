@@ -1,4 +1,9 @@
 #include "searchServer.h"
+#include "jsonConverter.h"
+
+#include <limits>
+#include <thread>
+#include <mutex>
 
 searchServer::searchServer(invertedIndex &idx) : m_index(idx) {}
 
