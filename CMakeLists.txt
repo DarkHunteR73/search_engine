@@ -18,7 +18,9 @@ set(PROJECT_SOURCES ${PROJECT_INCLUDE_DIR}/jsonConverter.h
                     ${PROJECT_SRC_DIR}/searchServer.cpp
 )
 
-add_subdirectory(src)
+add_executable(${PROJECT_NAME} ${PROJECT_SRC_DIR}/main.cpp ${PROJECT_SOURCES})
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_INCLUDE_DIR})
+
 add_subdirectory(Tests)
 
 include(FetchContent)
