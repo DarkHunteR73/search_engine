@@ -1,5 +1,9 @@
 #include "invertedIndex.h"
 
+#include <thread>
+#include <mutex>
+#include <sstream>
+
 void invertedIndex::updateDocumentBase(std::vector<std::string> input_docs) {
     if (docs != input_docs) {
         docs = input_docs;

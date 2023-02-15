@@ -1,13 +1,8 @@
 #ifndef CONVERTER_JSON_H
 #define CONVERTER_JSON_H
 
-#include <string>
 #include <vector>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <exception>
-#include <filesystem>
+#include <string>
 
 #include "nlohmann/json.hpp"
 #include "searchServer.h"

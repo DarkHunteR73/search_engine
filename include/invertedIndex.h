@@ -2,10 +2,7 @@
 #define INVERTED_INDEX_H
 
 #include <map>
-#include <thread>
-#include <mutex>
 #include <string>
-#include <sstream>
 #include <vector>
 
 struct entry {
