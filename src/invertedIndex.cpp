@@ -3,6 +3,7 @@
 #include <thread>
 #include <mutex>
 #include <sstream>
+#include <algorithm>
 
 void invertedIndex::updateDocumentBase(std::vector<std::string> input_docs) {
     if (docs != input_docs) {
