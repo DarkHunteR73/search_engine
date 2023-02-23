@@ -16,7 +16,8 @@ set(PROJECT_SOURCES ${PROJECT_INCLUDE_DIR}/jsonConverter.h
                     ${PROJECT_SRC_DIR}/invertedIndex.cpp
                     ${PROJECT_INCLUDE_DIR}/searchServer.h
                     ${PROJECT_SRC_DIR}/searchServer.cpp
-)
+                    ${PROJECT_INCLUDE_DIR}/threadPool.h
+                    ${PROJECT_SRC_DIR}/threadPool.cpp)
 
 add_executable(${PROJECT_NAME} ${PROJECT_SRC_DIR}/main.cpp ${PROJECT_SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_INCLUDE_DIR})
