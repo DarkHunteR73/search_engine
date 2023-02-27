@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <thread>
-#include <utility>
 #include <queue>
 #include <future>
 #include <mutex>
@@ -11,7 +10,7 @@
 
 class threadPool {
 public:
-    threadPool(uint32_t numOfThreads);
+    explicit threadPool(uint32_t numOfThreads);
 
     threadPool(const threadPool &) = delete;
 

@@ -3,9 +3,6 @@
 #include "jsonConverter.h"
 
 #include <limits>
-#include <thread>
-#include <atomic>
-#include <mutex>
 
 searchServer::searchServer(invertedIndex &idx) : m_index(idx) {}
 
