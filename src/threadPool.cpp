@@ -9,6 +9,7 @@ threadPool::threadPool(uint32_t numOfThreads) {
 }
 
 threadPool::~threadPool() {
+    wait();
     enough = true;
     queueCV.notify_all();
     for (auto &it: threads) {
