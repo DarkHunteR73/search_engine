@@ -101,6 +101,7 @@ TEST(TestCaseSearchServer, TestSimple) {
     std::vector<vector<relativeIndex>> result = srv.search(request);
     ASSERT_EQ(result, expected);
 }
+
 TEST(TestCaseSearchServer, TestTop5) {
     const vector<string> docs = {
             "london is the capital of great britain",
@@ -141,4 +142,9 @@ TEST(TestCaseSearchServer, TestTop5) {
     searchServer srv(idx);
     std::vector<vector<relativeIndex>> result = srv.search(request);
     ASSERT_EQ(result, expected);
+}
+
+int main(int argc, char *argv[]) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
