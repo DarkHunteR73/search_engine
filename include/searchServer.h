@@ -20,7 +20,7 @@ public:
     * чтобы SearchServer мог узнать частоту слов встречаемых в
     запросе
     */
-    searchServer(invertedIndex& idx);
+    explicit searchServer(invertedIndex& idx);
 
     /**
     * Метод обработки поисковых запросов
