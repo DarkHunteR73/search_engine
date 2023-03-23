@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <thread>
+#include <utility>
 #include <queue>
 #include <future>
 #include <mutex>
@@ -12,6 +13,8 @@ class threadPool {
 public:
     explicit threadPool(uint32_t numOfThreads);
 
+    ~threadPool();
+
     threadPool(const threadPool &) = delete;
 
     threadPool(threadPool &&) = delete;
@@ -19,8 +22,6 @@ public:
     threadPool &operator=(const threadPool &) = delete;
 
     threadPool &operator=(threadPool &&) = delete;
-
-    ~threadPool();
 
     template<class F, class... Args>
     void addTask(const F &func, Args &&... args) {
