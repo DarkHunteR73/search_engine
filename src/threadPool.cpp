@@ -3,17 +3,16 @@
 threadPool::threadPool(uint32_t numOfThreads) {
     threads.reserve(numOfThreads);
 
-    for (uint32_t i = 0; i < numOfThreads; ++i) {
+    for (uint32_t i = 0; i < numOfThreads; ++i)
         threads.emplace_back(&threadPool::run, this);
-    }
 }
 
 threadPool::~threadPool() {
+    wait();
     enough = true;
     queueCV.notify_all();
-    for (auto &it: threads) {
+    for (auto &it: threads)
         it.join();
-    }
 }
 
 void threadPool::run() {

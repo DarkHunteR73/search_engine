@@ -11,7 +11,9 @@
 
 class threadPool {
 public:
-    threadPool(uint32_t numOfThreads);
+    explicit threadPool(uint32_t numOfThreads);
+
+    ~threadPool();
 
     threadPool(const threadPool &) = delete;
 
@@ -20,8 +22,6 @@ public:
     threadPool &operator=(const threadPool &) = delete;
 
     threadPool &operator=(threadPool &&) = delete;
-
-    ~threadPool();
 
     template<class F, class... Args>
     void addTask(const F &func, Args &&... args) {
