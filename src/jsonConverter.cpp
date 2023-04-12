@@ -60,7 +60,7 @@ int jsonConverter::getResponsesLimit() {
 
 std::vector<std::string> jsonConverter::getRequests() {
     json j;
-    fs::path path("../../requests.json");
+    fs::path path(std::string(PROJECT_ROOT) + "requests.json");
     std::ifstream file(path);
 
     if (file.is_open()) {
@@ -107,7 +107,7 @@ void jsonConverter::putAnswers(std::vector<std::vector<relativeIndex>> answers) 
         }
     }
 
-    fs::path path("../../answers.json");
+    fs::path path(std::string(PROJECT_ROOT) + "answers.json");
     if (fs::exists(path)) {
         fs::remove(path);
     }
@@ -118,7 +118,7 @@ void jsonConverter::putAnswers(std::vector<std::vector<relativeIndex>> answers) 
 }
 
 void jsonConverter::readConfig() {
-    fs::path path{"../../config.json"};
+    fs::path path{std::string(PROJECT_ROOT) + "config.json"};
 
     if (!fs::exists(path)) {
         throw std::runtime_error{"Config file is missing."};
