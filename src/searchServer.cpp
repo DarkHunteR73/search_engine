@@ -7,7 +7,6 @@
 searchServer::searchServer(invertedIndex &idx) : m_index(idx) {}
 
 std::vector<std::vector<relativeIndex>> searchServer::search(const std::vector<std::string> &queries_input) {
-    jsonConverter converter;
     std::vector<std::vector<relativeIndex>> result(queries_input.size());
 
     std::vector<std::vector<int>> sumsForEachQuery(queries_input.size(),
@@ -47,7 +46,14 @@ std::vector<std::vector<relativeIndex>> searchServer::search(const std::vector<s
 
         tp.wait();
 
-        size_t responsesLimit = converter.getResponsesLimit();
+        size_t responsesLimit;
+
+#ifdef TEST_MODE
+        responsesLimit = 5;
+#else
+        jsonConverter converter;
+        responsesLimit = converter.getResponsesLimit();
+#endif
         for (size_t i = 0; i < queries_input.size(); ++i) {
             tp.addTask([responsesLimit, &maxAbsoluteRelevance]
                                (const std::vector<int> &sums, std::vector<relativeIndex> &result) {

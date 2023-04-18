@@ -36,3 +36,4 @@ FetchContent_MakeAvailable(googletest)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
 target_link_libraries(${PROJECT_NAME}_test PRIVATE nlohmann_json::nlohmann_json GTest::gtest_main)
+target_compile_definitions(${PROJECT_NAME}_test PUBLIC TEST_MODE)
