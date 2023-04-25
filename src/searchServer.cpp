@@ -11,7 +11,7 @@ std::vector<std::vector<relativeIndex>> searchServer::search(const std::vector<s
 
     std::vector<std::vector<int>> sumsForEachQuery(queries_input.size(),
                                                    std::vector<int>(m_index.size(), 0));
-    std::atomic<int> maxAbsoluteRelevance = 0;
+    std::atomic<int> maxAbsoluteRelevance = 1;
 
     {
         threadPool tp(std::min(queries_input.size(), static_cast<size_t>(std::thread::hardware_concurrency() - 1)));
