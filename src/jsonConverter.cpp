@@ -79,7 +79,7 @@ std::vector<std::string> jsonConverter::getRequests() {
     }
 }
 
-void jsonConverter::putAnswers(std::vector<std::vector<relativeIndex>> answers) {
+void jsonConverter::putAnswers(relativeIndexArray_t answers) {
     json j;
     j["answers"];
 

@@ -12,6 +12,8 @@ struct relativeIndex {
     bool operator==(const relativeIndex& other) const;
 };
 
+using relativeIndexArray_t = std::vector<std::vector<relativeIndex>>;
+
 class searchServer {
 public:
     /**
@@ -30,7 +32,7 @@ public:
     заданных запросов
     */
 
-    std::vector<std::vector<relativeIndex>> search(const std::vector<std::string>& queries_input);
+    relativeIndexArray_t search(const std::vector<std::string>& queries_input);
 private:
     invertedIndex m_index;
 };

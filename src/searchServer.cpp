@@ -6,8 +6,8 @@
 
 searchServer::searchServer(invertedIndex &idx) : m_index(idx) {}
 
-std::vector<std::vector<relativeIndex>> searchServer::search(const std::vector<std::string> &queries_input) {
-    std::vector<std::vector<relativeIndex>> result(queries_input.size());
+relativeIndexArray_t searchServer::search(const std::vector<std::string> &queries_input) {
+    relativeIndexArray_t result(queries_input.size());
 
     std::vector<std::vector<int>> sumsForEachQuery(queries_input.size(),
                                                    std::vector<int>(m_index.size(), 0));

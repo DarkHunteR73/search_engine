@@ -38,7 +38,7 @@ public:
     /**
     * Положить в файл answers.json результаты поисковых запросов
     */
-    void putAnswers(std::vector<std::vector<relativeIndex>> answers);
+    void putAnswers(relativeIndexArray_t answers);
 
 private:
     /**
