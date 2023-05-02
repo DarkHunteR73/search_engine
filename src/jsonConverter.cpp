@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <sstream>
+#include <exception>
 
 namespace fs = std::filesystem;
 
