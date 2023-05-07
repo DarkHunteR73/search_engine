@@ -5,11 +5,9 @@
 #include "searchServer.h"
 
 int main() {
-    jsonConverter converter;
-
     invertedIndex idx;
-    idx.updateDocumentBase(converter.getTextDocuments());
+    idx.updateDocumentBase(jsonConverter::getTextDocuments());
     searchServer engine(idx);
-    converter.putAnswers(engine.search(converter.getRequests()));
+    jsonConverter::putAnswers(engine.search(jsonConverter::getRequests()));
     return EXIT_SUCCESS;
 }

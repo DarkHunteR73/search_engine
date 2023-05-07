@@ -2,6 +2,7 @@
 #define CONVERTER_JSON_H
 
 #include <string>
+#include <mutex>
 #include <vector>
 
 #include "nlohmann/json.hpp"
@@ -20,32 +21,30 @@ public:
     * @return Возвращает список с содержимым файлов перечисленных
     * в config.json
     */
-    std::vector<std::string> getTextDocuments();
+    static std::vector<std::string> getTextDocuments();
 
     /**
     * Метод считывает поле max_responses для определения предельного
     * количества ответов на один запрос
     * @return значение поля max_responses. Если оно отсутствует, возвращает 5
     */
-    int getResponsesLimit();
+    static int getResponsesLimit();
 
     /**
     * Метод получения запросов из файла requests.json
     * @return возвращает список запросов из файла requests.json
     */
-    std::vector<std::string> getRequests();
+    static std::vector<std::string> getRequests();
 
     /**
     * Положить в файл answers.json результаты поисковых запросов
     */
-    void putAnswers(relativeIndexArray_t answers);
+    static void putAnswers(relativeIndexArray_t answers);
 
 private:
     /**
     * Метод чтения из файлов config.json
     */
-    void readConfig();
-
-    static json m_config;
+    static void readConfig();
 };
 #endif //CONVERTER_JSON_H
