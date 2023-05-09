@@ -51,8 +51,7 @@ relativeIndexArray_t searchServer::search(const std::vector<std::string> &querie
 #ifdef TEST_MODE
         responsesLimit = 5;
 #else
-        jsonConverter converter;
-        responsesLimit = converter.getResponsesLimit();
+        responsesLimit = jsonConverter::getResponsesLimit();
 #endif
         for (size_t i = 0; i < queries_input.size(); ++i) {
             tp.addTask([responsesLimit, &maxAbsoluteRelevance]
