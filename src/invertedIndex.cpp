@@ -39,7 +39,7 @@ void invertedIndex::updateDocumentBase(std::vector<std::string> input_docs) {
                                     freq_dictionary[tmp].emplace_back(entry{docIndex, 1});
                                 }
                             } else {
-                                freq_dictionary.insert(std::make_pair(tmp, std::vector<entry>{{docIndex, 1}}));
+                                freq_dictionary[tmp] = std::vector<entry>{{docIndex, 1}};
                             }
                         }
                     }
