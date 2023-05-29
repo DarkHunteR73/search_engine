@@ -2,7 +2,6 @@
 #define CONVERTER_JSON_H
 
 #include <string>
-#include <mutex>
 #include <vector>
 
 #include "nlohmann/json.hpp"

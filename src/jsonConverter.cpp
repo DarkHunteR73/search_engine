@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <mutex>
 #include <sstream>
 #include <exception>
 
@@ -21,6 +22,8 @@ std::vector<std::string> jsonConverter::getTextDocuments() {
         }
     }
 
+    std::cout << "Receiving text documents:" << std::endl;
+
     std::vector<std::string> result;
 
     if (configCache.contains("files")) {
@@ -30,12 +33,14 @@ std::vector<std::string> jsonConverter::getTextDocuments() {
         for (auto &i: pathList) {
             std::ifstream file(i);
             if (file.is_open()) {
+                std::cout << i.string();
                 std::stringstream ss;
                 ss << file.rdbuf();
                 result.emplace_back(ss.str());
                 file.close();
+                std::cout << " OK." << std::endl;
             } else {
-                std::cerr << i << " is not exists." << std::endl;
+                std::cerr << i.string() << " is not exists." << std::endl;
                 result.emplace_back("");
             }
         }
@@ -118,6 +123,8 @@ void jsonConverter::putAnswers(relativeIndexArray_t answers) {
     std::ofstream file(path);
     file << std::setw(4) << j << std::endl;
     file.close();
+
+    std::cout << "Reults are saved to answers.json" << std::endl;
 }
 
 void jsonConverter::readConfig() {
@@ -149,6 +156,6 @@ void jsonConverter::readConfig() {
     std::cout << " OK" << std::endl;
 
     std::cout << "Starting "
-              << (configCache["config"].contains("name") ? configCache["config"]["name"] : "Unnamed engine")
-              << " version " << configCache["config"]["version"] << std::endl;
+              << (configCache["config"].contains("name") ? configCache["config"]["name"].get<std::string>() : "Unnamed engine")
+              << " version " << configCache["config"]["version"].get<std::string>() << std::endl;
 }
