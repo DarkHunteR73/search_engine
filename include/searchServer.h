@@ -1,9 +1,11 @@
 #ifndef SEARCH_SERVER_H
 #define SEARCH_SERVER_H
 
+#include "invertedIndex.h"
+#include "threadPool.h"
+
 #include <string>
 #include <vector>
-#include "invertedIndex.h"
 
 struct relativeIndex {
     size_t doc_id;
@@ -32,7 +34,8 @@ public:
     заданных запросов
     */
 
-    relativeIndexArray_t search(const std::vector<std::string>& queries_input);
+    relativeIndexArray_t search(const std::vector<std::string>& queries_input,
+                                threadPool *tp = nullptr);
 private:
     invertedIndex m_index;
 };

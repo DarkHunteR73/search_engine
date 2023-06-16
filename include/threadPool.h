@@ -8,6 +8,7 @@
 #include <future>
 #include <mutex>
 #include <atomic>
+#include <unordered_set>
 
 class threadPool {
 public:
@@ -24,10 +25,14 @@ public:
     threadPool &operator=(threadPool &&) = delete;
 
     template<class F, class... Args>
-    void addTask(const F &func, Args &&... args) {
+    int32_t addTask(const F &func, Args &&... args) {
+        int32_t taskId = lastTask++;
+
         std::lock_guard<std::mutex> queueLock(queueMtx);
-        queue.emplace(std::async(std::launch::deferred, func, args...));
+        queue.emplace(std::async(std::launch::deferred, func, args...), taskId);
         queueCV.notify_one();
+
+        return taskId;
     }
 
     void wait();
@@ -35,15 +40,18 @@ public:
 private:
     void run();
 
-    std::queue<std::future<void>> queue;
+    std::queue<std::pair<std::future<void>, uint32_t>> queue;
     std::mutex queueMtx;
     std::condition_variable queueCV;
-
-    std::condition_variable taskWaiter;
 
     std::vector<std::thread> threads;
 
     std::atomic<bool> enough{false};
+
+    std::unordered_set<uint32_t> completedTasks;
+    std::atomic<uint32_t> lastTask{0};
+    std::mutex taskMtx;
+    std::condition_variable taskWaiter;
 };
 
 #endif //THREADPOOL_H

@@ -1,6 +1,8 @@
 #ifndef INVERTED_INDEX_H
 #define INVERTED_INDEX_H
 
+#include "threadPool.h"
+
 #include <map>
 #include <string>
 #include <vector>
@@ -20,7 +22,7 @@ public:
     поиск*
     @param input_docs содержимое документов
     */
-    void updateDocumentBase(std::vector<std::string> input_docs);
+    void updateDocumentBase(std::vector<std::string> input_docs, threadPool *tp = nullptr);
 
     /**
     * Метод определяет количество вхождений слова word в загруженной базе

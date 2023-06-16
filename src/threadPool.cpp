@@ -8,11 +8,11 @@ threadPool::threadPool(uint32_t numOfThreads) {
 }
 
 threadPool::~threadPool() {
-    wait();
     enough = true;
-    queueCV.notify_all();
-    for (auto &it: threads)
+    for (auto &it: threads) {
+        queueCV.notify_all();
         it.join();
+    }
 }
 
 void threadPool::run() {
@@ -25,7 +25,11 @@ void threadPool::run() {
             queue.pop();
             lock.unlock();
 
-            task.get();
+            task.first.get();
+
+            std::lock_guard<std::mutex> lock(taskMtx);
+            completedTasks.insert(task.second);
+
             taskWaiter.notify_all();
         }
     }
@@ -33,5 +37,8 @@ void threadPool::run() {
 
 void threadPool::wait() {
     std::unique_lock<std::mutex> lock(queueMtx);
-    taskWaiter.wait(lock, [this](){ return queue.empty(); });
+    taskWaiter.wait(lock, [this](){
+        std::lock_guard<std::mutex> lock(taskMtx);
+        return queue.empty() && lastTask == completedTasks.size();
+    });
 }
