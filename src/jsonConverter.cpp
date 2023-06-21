@@ -92,7 +92,7 @@ void jsonConverter::putAnswers(relativeIndexArray_t answers) {
     for (size_t i = 0; i < answers.size(); ++i) {
         std::string count = std::to_string(i + 1);
 
-        for (int k = 3 - count.length(); k > 0; --k) {
+        for (int k = count.length(); k < 3; ++k) {
             count = '0' + count;
         }
         count = "request" + count;

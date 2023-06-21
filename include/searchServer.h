@@ -24,7 +24,7 @@ public:
     * чтобы SearchServer мог узнать частоту слов встречаемых в
     запросе
     */
-    explicit searchServer(invertedIndex& idx);
+    explicit searchServer(const invertedIndex& idx);
 
     /**
     * Метод обработки поисковых запросов

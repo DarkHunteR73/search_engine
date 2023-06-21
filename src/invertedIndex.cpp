@@ -5,7 +5,7 @@
 #include <sstream>
 #include <algorithm>
 
-void invertedIndex::updateDocumentBase(std::vector<std::string> input_docs, threadPool *tp) {
+void invertedIndex::updateDocumentBase(const std::vector<std::string> &input_docs, threadPool *tp) {
     if (docs != input_docs) {
         docs = input_docs;
         freq_dictionary.clear();
@@ -51,7 +51,7 @@ void invertedIndex::updateDocumentBase(std::vector<std::string> input_docs, thre
 
         tp->wait();
 
-        if (hasExternTp == true) {
+        if (hasExternTp) {
             delete tp;
         }
 

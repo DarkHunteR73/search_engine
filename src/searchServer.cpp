@@ -4,7 +4,7 @@
 
 #include <limits>
 
-searchServer::searchServer(invertedIndex &idx) : m_index(idx) {}
+searchServer::searchServer(const invertedIndex &idx) : m_index(idx) {}
 
 relativeIndexArray_t searchServer::search(const std::vector<std::string> &queries_input,
                                           threadPool *tp) {
@@ -85,7 +85,7 @@ relativeIndexArray_t searchServer::search(const std::vector<std::string> &querie
 
     tp->wait();
 
-    if (hasExternTp == true) {
+    if (hasExternTp) {
         delete tp;
     }
 
