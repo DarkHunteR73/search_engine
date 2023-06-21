@@ -10,3 +10,5 @@ cmake*/
 .vs/
 .cache/
 *.json
+!config.json
+!requests.json
