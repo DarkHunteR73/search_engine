@@ -12,13 +12,13 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+cmake_policy(SET CMP0079 NEW)
+
 find_package(Qt5 REQUIRED COMPONENTS
     Core
     Gui
     Widgets
 )
-
-cmake_policy(SET CMP0079 NEW)
 
 add_definitions(-DENGINE_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
                 -DENGINE_VERSION_MINOR=${PROJECT_VERSION_MINOR}
@@ -32,13 +32,31 @@ set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(PROJECT_SRC_DIR ${CMAKE_SOURCE_DIR}/src)
+
 set(PROJECT_SOURCES ${PROJECT_SRC_DIR}/jsonConverter.cpp
                     ${PROJECT_SRC_DIR}/invertedIndex.cpp
                     ${PROJECT_SRC_DIR}/searchServer.cpp
-                    ${PROJECT_SRC_DIR}/threadPool.cpp)
+                    ${PROJECT_SRC_DIR}/threadPool.cpp
+)
 
-add_executable(${PROJECT_NAME} ${PROJECT_SRC_DIR}/main.cpp ${PROJECT_SOURCES})
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_INCLUDE_DIR})
+set(PROJECT_HEADERS ${PROJECT_INCLUDE_DIR}/jsonConverter.h
+                    ${PROJECT_INCLUDE_DIR}/invertedIndex.h
+                    ${PROJECT_INCLUDE_DIR}/searchServer.h
+                    ${PROJECT_INCLUDE_DIR}/threadPool.h
+                    ${PROJECT_INCLUDE_DIR}/mainwindow.h)
+
+add_executable(${PROJECT_NAME}_cli ${PROJECT_SRC_DIR}/main.cpp
+                ${PROJECT_SOURCES}
+)
+
+add_executable(${PROJECT_NAME}_gui ${PROJECT_SRC_DIR}/main_gui.cpp
+                ${PROJECT_SOURCES}
+                ${PROJECT_HEADERS}
+                ${PROJECT_SRC_DIR}/mainwindow.ui
+                ${PROJECT_SRC_DIR}/mainwindow.cpp)
+
+target_include_directories(${PROJECT_NAME}_cli PUBLIC ${PROJECT_INCLUDE_DIR})
+target_include_directories(${PROJECT_NAME}_gui PUBLIC ${PROJECT_INCLUDE_DIR})
 
 add_subdirectory(Tests)
 
@@ -53,7 +71,9 @@ set(gtest_disable_pthreads on)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME}_cli PRIVATE nlohmann_json::nlohmann_json)
+
+target_link_libraries(${PROJECT_NAME}_gui PRIVATE
     nlohmann_json::nlohmann_json
     Qt5::Core
     Qt5::Widgets
