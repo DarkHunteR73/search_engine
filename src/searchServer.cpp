@@ -4,7 +4,7 @@
 
 #include <limits>
 
-searchServer::searchServer(const invertedIndex &idx) : m_index(idx) {}
+searchServer::searchServer(invertedIndex &idx) : m_index(idx) {}
 
 relativeIndexArray_t searchServer::search(const std::vector<std::string> &queries_input,
                                           threadPool *tp) {

@@ -30,6 +30,11 @@ public:
     static int getResponsesLimit();
 
     /**
+     * Метод считывает имя движка из файла config.json
+     */
+    static std::string getTitle();
+
+    /**
     * Метод получения запросов из файла requests.json
     * @return возвращает список запросов из файла requests.json
     */
@@ -40,10 +45,9 @@ public:
     */
     static void putAnswers(relativeIndexArray_t answers);
 
-private:
     /**
-    * Метод чтения из файлов config.json
+    * Инициализация кэша из config.json
     */
-    static void readConfig();
+    static void initCache();
 };
 #endif //CONVERTER_JSON_H

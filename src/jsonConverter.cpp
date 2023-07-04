@@ -15,7 +15,7 @@ std::once_flag configCheckedFlag;
 std::vector<std::string> jsonConverter::getTextDocuments() {
     if (configCache.empty()) {
         try {
-            std::call_once(configCheckedFlag, readConfig);
+            std::call_once(configCheckedFlag, initCache);
         } catch (std::runtime_error &e) {
             std::cerr << e.what() << std::endl;
             std::exit(EXIT_FAILURE);
@@ -52,7 +52,7 @@ std::vector<std::string> jsonConverter::getTextDocuments() {
 int jsonConverter::getResponsesLimit() {
     if (configCache.empty()) {
         try {
-            std::call_once(configCheckedFlag, readConfig);
+            std::call_once(configCheckedFlag, initCache);
         } catch (std::runtime_error &e) {
             std::cerr << e.what() << std::endl;
             std::exit(EXIT_FAILURE);
@@ -64,6 +64,21 @@ int jsonConverter::getResponsesLimit() {
     } else {
         return 5;
     }
+}
+
+std::string jsonConverter::getTitle() {
+    if (configCache.empty()) {
+        try {
+            std::call_once(configCheckedFlag, initCache);
+        } catch (std::runtime_error &e) {
+            std::cerr << e.what() << std::endl;
+            std::exit(EXIT_FAILURE);
+        }
+    }
+
+    return configCache["config"].contains("name") && !configCache["config"]["name"].empty()
+        ? configCache["config"]["name"].get<std::string>()
+        : std::string("Unnamed engine");
 }
 
 std::vector<std::string> jsonConverter::getRequests() {
@@ -124,10 +139,10 @@ void jsonConverter::putAnswers(relativeIndexArray_t answers) {
     file << std::setw(4) << j << std::endl;
     file.close();
 
-    std::cout << "Reults are saved to answers.json" << std::endl;
+    std::cout << "Results are saved to answers.json" << std::endl;
 }
 
-void jsonConverter::readConfig() {
+void jsonConverter::initCache() {
     fs::path path{std::string(PROJECT_ROOT) + "config.json"};
 
     if (!fs::exists(path)) {
@@ -156,6 +171,6 @@ void jsonConverter::readConfig() {
     std::cout << " OK" << std::endl;
 
     std::cout << "Starting "
-              << (configCache["config"].contains("name") ? configCache["config"]["name"].get<std::string>() : "Unnamed engine")
+              << jsonConverter::getTitle()
               << " version " << configCache["config"]["version"].get<std::string>() << std::endl;
 }

@@ -24,7 +24,7 @@ public:
     * чтобы SearchServer мог узнать частоту слов встречаемых в
     запросе
     */
-    explicit searchServer(const invertedIndex& idx);
+    explicit searchServer(invertedIndex& idx);
 
     /**
     * Метод обработки поисковых запросов
@@ -37,6 +37,6 @@ public:
     relativeIndexArray_t search(const std::vector<std::string>& queries_input,
                                 threadPool *tp = nullptr);
 private:
-    invertedIndex m_index;
+    invertedIndex &m_index;
 };
 #endif //SEARCH_SERVER_H

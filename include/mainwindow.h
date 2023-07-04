@@ -4,7 +4,6 @@
 #include "threadPool.h"
 #include "invertedIndex.h"
 #include "searchServer.h"
-#include "jsonConverter.h"
 
 #include <QMainWindow>
 
@@ -29,5 +28,6 @@ private:
 
     threadPool *tp;
     invertedIndex *idx;
+    searchServer *engine;
 };
 #endif // MAINWINDOW_H
