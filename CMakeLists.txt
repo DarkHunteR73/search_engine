@@ -49,7 +49,7 @@ add_executable(${PROJECT_NAME}_cli ${PROJECT_SRC_DIR}/main.cpp
                 ${PROJECT_SOURCES}
 )
 
-add_executable(${PROJECT_NAME}_gui ${PROJECT_SRC_DIR}/main_gui.cpp
+add_executable(${PROJECT_NAME}_gui WIN32 ${PROJECT_SRC_DIR}/main_gui.cpp
                 ${PROJECT_SOURCES}
                 ${PROJECT_HEADERS}
                 ${PROJECT_SRC_DIR}/mainwindow.ui
@@ -58,18 +58,25 @@ add_executable(${PROJECT_NAME}_gui ${PROJECT_SRC_DIR}/main_gui.cpp
 target_include_directories(${PROJECT_NAME}_cli PUBLIC ${PROJECT_INCLUDE_DIR})
 target_include_directories(${PROJECT_NAME}_gui PUBLIC ${PROJECT_INCLUDE_DIR})
 
-add_subdirectory(Tests)
-
 include(FetchContent)
+
+if (CMAKE_BUILD_TYPE MATCHES "Debug")
+    add_subdirectory(Tests)
+    target_compile_definitions(${PROJECT_NAME}_test PUBLIC TEST_MODE)
+
+    FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/ec25eea8f8237cf86c30703f59747e42f34b6f75.zip)
+    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    set(gtest_disable_pthreads on)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+
+    target_link_libraries(${PROJECT_NAME}_test PRIVATE nlohmann_json::nlohmann_json GTest::gtest_main)
+endif()
+
 
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
-FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/ec25eea8f8237cf86c30703f59747e42f34b6f75.zip)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-set(gtest_disable_pthreads on)
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
 
 target_link_libraries(${PROJECT_NAME}_cli PRIVATE nlohmann_json::nlohmann_json)
 
@@ -80,11 +87,14 @@ target_link_libraries(${PROJECT_NAME}_gui PRIVATE
     Qt5::Gui
 )
 
-target_link_libraries(${PROJECT_NAME}_test PRIVATE nlohmann_json::nlohmann_json GTest::gtest_main)
-target_compile_definitions(${PROJECT_NAME}_test PUBLIC TEST_MODE)
 
 if (WIN32)
     set(DEBUG_SUFFIX)
+
+    if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC" AND CMAKE_BUILD_TYPE MATCHES "Debug")
+        set(DEBUG_SUFFIX "d")
+    endif()
+
     set(QT_INSTALL_PATH "${CMAKE_PREFIX_PATH}")
     if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
         set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
