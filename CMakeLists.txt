@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 project(search_engine VERSION 0.1)
 
 if (WIN32)
-    set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/msvc2017_64/lib/cmake")
+    set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
 endif ()
 
 set(CMAKE_AUTOUIC ON)
