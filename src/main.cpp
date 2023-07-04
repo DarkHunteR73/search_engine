@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "jsonConverter.h"
 #include "invertedIndex.h"
 #include "searchServer.h"
