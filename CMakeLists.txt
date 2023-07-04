@@ -1,16 +1,13 @@
 cmake_minimum_required(VERSION 3.2)
 project(search_engine VERSION 0.1)
 
-if (WIN32)
-    set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.12.12/5.12.12/mingw73_64/lib/cmake")
-endif ()
-
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 cmake_policy(SET CMP0079 NEW)
 
@@ -95,11 +92,11 @@ if (WIN32)
         set(DEBUG_SUFFIX "d")
     endif()
 
-    set(QT_INSTALL_PATH "${CMAKE_PREFIX_PATH}")
+    set(QT_INSTALL_PATH "${Qt5_DIR}/..")
     if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
         set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
         if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
-                set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
+            set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
         endif ()
     endif ()
     if (EXISTS "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll")
