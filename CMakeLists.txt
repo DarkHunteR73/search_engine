@@ -57,23 +57,12 @@ target_include_directories(${PROJECT_NAME}_gui PUBLIC ${PROJECT_INCLUDE_DIR})
 
 include(FetchContent)
 
-if (CMAKE_BUILD_TYPE MATCHES "Debug")
-    add_subdirectory(Tests)
-    target_compile_definitions(${PROJECT_NAME}_test PUBLIC TEST_MODE)
-
-    FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/ec25eea8f8237cf86c30703f59747e42f34b6f75.zip)
-    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-    set(gtest_disable_pthreads on)
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
-
-    target_link_libraries(${PROJECT_NAME}_test PRIVATE nlohmann_json::nlohmann_json GTest::gtest_main)
-endif()
-
-
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
+if (CMAKE_BUILD_TYPE MATCHES "Debug")
+    add_subdirectory(Tests)
+endif()
 
 target_link_libraries(${PROJECT_NAME}_cli PRIVATE nlohmann_json::nlohmann_json)
 
@@ -83,7 +72,6 @@ target_link_libraries(${PROJECT_NAME}_gui PRIVATE
     Qt5::Widgets
     Qt5::Gui
 )
-
 
 if (WIN32)
     set(DEBUG_SUFFIX)
