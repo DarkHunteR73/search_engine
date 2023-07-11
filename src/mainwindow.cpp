@@ -10,8 +10,6 @@
 #include <vector>
 #include <string>
 
-extern json configCache;
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
@@ -99,11 +97,11 @@ void MainWindow::search()
     jsonConverter::putAnswers(engine.search(jsonConverter::getRequests(), tp));
 
     QMessageBox msg(
-              QMessageBox::Information
-            , "Completed"
-            , "Results are saved to answers.json"
-            , QMessageBox::Ok
-            , this
-        );
-        msg.exec();
+          QMessageBox::Information
+        , "Completed"
+        , "Results are saved to answers.json"
+        , QMessageBox::Ok
+        , this
+    );
+    msg.exec();
 }
