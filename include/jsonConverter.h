@@ -30,6 +30,12 @@ public:
     static int getResponsesLimit();
 
     /**
+    * Метод изменяет значение max_responses
+    * @param значение
+    */
+    static void setResponsesLimit(int);
+
+    /**
      * Метод считывает имя движка из файла config.json
      */
     static std::string getTitle();

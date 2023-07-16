@@ -40,17 +40,23 @@ set(PROJECT_HEADERS ${PROJECT_INCLUDE_DIR}/jsonConverter.h
                     ${PROJECT_INCLUDE_DIR}/invertedIndex.h
                     ${PROJECT_INCLUDE_DIR}/searchServer.h
                     ${PROJECT_INCLUDE_DIR}/threadPool.h
-                    ${PROJECT_INCLUDE_DIR}/mainwindow.h)
+                    ${PROJECT_INCLUDE_DIR}/mainwindow.h
+                    ${PROJECT_INCLUDE_DIR}/requesteditor.h)
+
+set(UI_SOURCES ${PROJECT_SRC_DIR}/mainwindow.ui
+               ${PROJECT_SRC_DIR}/mainwindow.cpp
+               ${PROJECT_SRC_DIR}/requesteditor.ui
+               ${PROJECT_SRC_DIR}/requesteditor.cpp)
 
 add_executable(${PROJECT_NAME}_cli ${PROJECT_SRC_DIR}/main.cpp
-                ${PROJECT_SOURCES}
+                                   ${PROJECT_SOURCES}
 )
 
 add_executable(${PROJECT_NAME}_gui WIN32 ${PROJECT_SRC_DIR}/main_gui.cpp
-                ${PROJECT_SOURCES}
-                ${PROJECT_HEADERS}
-                ${PROJECT_SRC_DIR}/mainwindow.ui
-                ${PROJECT_SRC_DIR}/mainwindow.cpp)
+                                         ${PROJECT_HEADERS}
+                                         ${PROJECT_SOURCES}
+                                         ${UI_SOURCES}
+)
 
 target_include_directories(${PROJECT_NAME}_cli PUBLIC ${PROJECT_INCLUDE_DIR})
 target_include_directories(${PROJECT_NAME}_gui PUBLIC ${PROJECT_INCLUDE_DIR})

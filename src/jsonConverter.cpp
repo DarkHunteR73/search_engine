@@ -174,3 +174,17 @@ void jsonConverter::initCache() {
               << jsonConverter::getTitle()
               << " version " << configCache["config"]["version"].get<std::string>() << std::endl;
 }
+
+void jsonConverter::setResponsesLimit(int val) {
+    if (configCache.empty()) {
+        try {
+            std::call_once(configCheckedFlag, initCache);
+        }
+        catch (std::runtime_error& e) {
+            std::cerr << e.what() << std::endl;
+            std::exit(EXIT_FAILURE);
+        }
+    }
+
+    configCache["config"]["max_responses"] = val;
+}

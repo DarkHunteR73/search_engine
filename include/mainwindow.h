@@ -22,6 +22,8 @@ public slots:
     void addItems();
     void removeSelectedItems();
     void search();
+    void setMaxResponses(int);
+    void openRequestEditor();
 
 private:
     Ui::MainWindow *ui;

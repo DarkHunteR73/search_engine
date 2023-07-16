@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
-    <height>509</height>
+    <width>445</width>
+    <height>420</height>
    </rect>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -33,6 +33,62 @@
       </item>
       <item>
        <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Max responses:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="maxResponsesBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>9999</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -115,6 +171,19 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QPushButton" name="editButton">
+            <property name="text">
+             <string>Edit requests</string>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -148,8 +217,8 @@
      <y>18</y>
     </hint>
     <hint type="destinationlabel">
-     <x>495</x>
-     <y>131</y>
+     <x>435</x>
+     <y>180</y>
     </hint>
    </hints>
   </connection>
@@ -164,8 +233,8 @@
      <y>19</y>
     </hint>
     <hint type="destinationlabel">
-     <x>495</x>
-     <y>171</y>
+     <x>435</x>
+     <y>220</y>
     </hint>
    </hints>
   </connection>
@@ -180,8 +249,8 @@
      <y>45</y>
     </hint>
     <hint type="destinationlabel">
-     <x>495</x>
-     <y>131</y>
+     <x>435</x>
+     <y>180</y>
     </hint>
    </hints>
   </connection>
@@ -196,8 +265,8 @@
      <y>41</y>
     </hint>
     <hint type="destinationlabel">
-     <x>495</x>
-     <y>171</y>
+     <x>435</x>
+     <y>220</y>
     </hint>
    </hints>
   </connection>
@@ -208,8 +277,8 @@
    <slot>addItems()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>131</y>
+     <x>435</x>
+     <y>180</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
@@ -224,8 +293,8 @@
    <slot>removeSelectedItems()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>171</y>
+     <x>435</x>
+     <y>220</y>
     </hint>
     <hint type="destinationlabel">
      <x>426</x>
@@ -240,8 +309,8 @@
    <slot>search()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>206</x>
-     <y>501</y>
+     <x>216</x>
+     <y>409</y>
     </hint>
     <hint type="destinationlabel">
      <x>448</x>
@@ -288,12 +357,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>448</x>
-     <y>197</y>
+     <x>435</x>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
-     <x>334</x>
-     <y>202</y>
+     <x>331</x>
+     <y>349</y>
     </hint>
    </hints>
   </connection>
@@ -308,8 +377,8 @@
      <y>48</y>
     </hint>
     <hint type="destinationlabel">
-     <x>482</x>
-     <y>195</y>
+     <x>435</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -324,8 +393,72 @@
      <y>21</y>
     </hint>
     <hint type="destinationlabel">
-     <x>476</x>
-     <y>210</y>
+     <x>435</x>
+     <y>260</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>maxResponsesBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setMaxResponses(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>113</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>284</x>
+     <y>79</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>maxResponsesBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>176</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>maxResponsesBox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>137</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>176</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openRequestEditor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>375</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>382</x>
+     <y>298</y>
     </hint>
    </hints>
   </connection>
@@ -334,5 +467,7 @@
   <slot>addItems()</slot>
   <slot>removeSelectedItems()</slot>
   <slot>search()</slot>
+  <slot>setMaxResponses(int)</slot>
+  <slot>openRequestEditor()</slot>
  </slots>
 </ui>

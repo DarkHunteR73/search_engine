@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "requesteditor.h"
 #include "jsonConverter.h"
 
 #include <QFile>
@@ -30,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
         std::exit(EXIT_FAILURE);
     }
 
+    this->ui->maxResponsesBox->setValue(jsonConverter::getResponsesLimit());
     this->setWindowTitle(jsonConverter::getTitle().c_str());
 
     tp = new threadPool(std::thread::hardware_concurrency() - 1);
@@ -45,13 +47,12 @@ MainWindow::~MainWindow() {
 }
 
 #ifdef WIN32
-#define HOMEDIR "USERPROFILE"
+constexpr auto HOMEDIR = "USERPROFILE";
 #else
-#define HOMEDIR "HOME"
+constexpr auto HOMEDIR = "HOME";
 #endif //WIN32
 
-void MainWindow::addItems()
-{
+void MainWindow::addItems() {
     ui->listWidget->addItems(QFileDialog::getOpenFileNames(
           this
         , "Add text files"
@@ -61,8 +62,7 @@ void MainWindow::addItems()
     );
 }
 
-void MainWindow::removeSelectedItems()
-{
+void MainWindow::removeSelectedItems() {
     auto items = ui->listWidget->selectedItems();
     for (auto &i : items)
     {
@@ -70,8 +70,7 @@ void MainWindow::removeSelectedItems()
     }
 }
 
-void MainWindow::search()
-{
+void MainWindow::search() {
     std::vector<std::string> docs;
 
     if (ui->radioButton->isChecked()) {
@@ -104,4 +103,13 @@ void MainWindow::search()
         , this
     );
     msg.exec();
+}
+
+void MainWindow::setMaxResponses(int val) {
+    jsonConverter::setResponsesLimit(val);
+}
+
+void MainWindow::openRequestEditor() {
+    requestEditor *editor = new requestEditor(this);
+    editor->show();
 }
