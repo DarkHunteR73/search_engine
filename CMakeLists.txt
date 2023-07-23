@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.5)
 project(search_engine VERSION 0.1)
 
 set(CMAKE_AUTOUIC ON)
@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-cmake_policy(SET CMP0079 NEW)
+#cmake_policy(SET CMP0079 NEW)
 
 find_package(Qt5 REQUIRED COMPONENTS
     Core
