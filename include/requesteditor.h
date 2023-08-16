@@ -14,6 +14,10 @@ public:
     requestEditor(QWidget *parent = nullptr);
     ~requestEditor();
 
+public slots:
+    void addRequest();
+    void removeSelectedRequest();
+
 private:
     Ui::requestEditor *ui;
 };

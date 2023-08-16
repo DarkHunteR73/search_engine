@@ -64,8 +64,7 @@ void MainWindow::addItems() {
 
 void MainWindow::removeSelectedItems() {
     auto items = ui->listWidget->selectedItems();
-    for (auto &i : items)
-    {
+    for (auto &i : items) {
         delete ui->listWidget->takeItem(ui->listWidget->row(i));
     }
 }

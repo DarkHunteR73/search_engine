@@ -15,3 +15,14 @@ requestEditor::requestEditor(QWidget *parent)
 requestEditor::~requestEditor() {
     delete ui;
 }
+
+void requestEditor::addRequest() {
+
+}
+
+void requestEditor::removeSelectedRequest() {
+    auto items = ui->listWidget->selectedItems();
+    for (auto &i : items) {
+        delete ui->listWidget->takeItem(ui->listWidget->row(i));
+    }
+}
