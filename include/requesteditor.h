@@ -17,6 +17,7 @@ public:
 public slots:
     void addRequest();
     void removeSelectedRequest();
+    void acceptRequests();
 
 private:
     Ui::requestEditor *ui;

@@ -81,16 +81,22 @@ std::string jsonConverter::getTitle() {
         : std::string("Unnamed engine");
 }
 
-std::vector<std::string> jsonConverter::getRequests() {
-    json j;
-    fs::path path(std::string(PROJECT_ROOT) + "requests.json");
-    std::ifstream file(path);
+json requestCache = json();
+bool requestCacheInited = false;
 
-    if (file.is_open()) {
-        file >> j;
-        file.close();
-    } else {
-        std::cerr << "requests.json is missing." << std::endl;
+std::vector<std::string> jsonConverter::getRequests() {
+    json::reference j = requestCache;
+
+    if (!requestCacheInited) {
+        fs::path path(std::string(PROJECT_ROOT) + "requests.json");
+        std::ifstream file(path);
+
+        if (file.is_open()) {
+            file >> j;
+            file.close();
+        } else {
+            std::cerr << "requests.json is missing." << std::endl;
+        }
     }
 
     if (j.contains("requests")) {
@@ -98,6 +104,13 @@ std::vector<std::string> jsonConverter::getRequests() {
     } else {
         return {};
     }
+}
+
+void jsonConverter::setRequests(std::vector<std::string> requests) {
+    json::reference j = requestCache;
+    j.clear();
+
+    requestCache["requests"] = requests;
 }
 
 void jsonConverter::putAnswers(relativeIndexArray_t answers) {

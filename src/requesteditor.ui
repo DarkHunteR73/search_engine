@@ -17,7 +17,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Edit requests</string>
+   <string>Request editor</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -142,9 +142,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>requestEditor</receiver>
+   <slot>acceptRequests()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>331</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>requestEditor</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>369</x>
+     <y>283</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addRequest()</slot>
   <slot>removeSelectedRequest()</slot>
+  <slot>acceptRequests()</slot>
+  <slot>rejectRequests()</slot>
  </slots>
 </ui>

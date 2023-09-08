@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "requesteditor.h"
 #include "jsonConverter.h"
 
 #include <QFile>
@@ -109,6 +108,9 @@ void MainWindow::setMaxResponses(int val) {
 }
 
 void MainWindow::openRequestEditor() {
-    requestEditor *editor = new requestEditor(this);
+    if (!editor) {
+        editor = new requestEditor(this);
+    }
+
     editor->show();
 }

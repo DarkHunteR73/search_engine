@@ -42,9 +42,14 @@ public:
 
     /**
     * Метод получения запросов из файла requests.json
-    * @return возвращает список запросов из файла requests.json
+    * @return возвращает список запросов из файла
     */
     static std::vector<std::string> getRequests();
+
+    /**
+    * Метод меняет список запросов
+    */
+    static void setRequests(std::vector<std::string>);
 
     /**
     * Положить в файл answers.json результаты поисковых запросов

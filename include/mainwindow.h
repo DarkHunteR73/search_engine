@@ -4,6 +4,7 @@
 #include "threadPool.h"
 #include "invertedIndex.h"
 #include "searchServer.h"
+#include "requesteditor.h"
 
 #include <QMainWindow>
 
@@ -31,5 +32,6 @@ private:
     threadPool *tp;
     invertedIndex *idx;
     searchServer *engine;
+    requestEditor *editor = nullptr;
 };
 #endif // MAINWINDOW_H
